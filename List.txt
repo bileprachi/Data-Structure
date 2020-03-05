@@ -1,0 +1,160 @@
+/******************************************************************************
+Linked List :
+insertAtBegin
+insertInBetween
+addAtEnd
+printList
+
+*******************************************************************************/
+
+#include <iostream>
+
+using namespace std;
+
+class Node
+{
+    public:
+    int value;
+    Node* next;
+};
+
+void insertAtBegin(int val, Node** head)
+{
+    Node* newNode = new Node();
+    newNode->value = val;
+    newNode->next = *head;
+    *head = newNode;
+}
+
+void addAtEnd(int val,Node** head)
+{
+    //create new Node here and assign value to that Node
+    Node* newNode = new Node();
+    newNode->value = val;
+    newNode->next = NULL;
+    //case 1: If List is empty
+    if (*head == NULL)
+    {
+        *head = newNode;
+        return;
+    }
+    //case 2: If List is not empty then traverse the whole list till the end of list
+    Node* tail = *head;
+    while (tail->next != NULL)
+    {
+        tail = tail->next;
+    }
+    tail->next = newNode;
+    return;
+}
+
+void insertInBetween(int place,int val,Node* head)
+{
+    int pos = 1;
+    Node* temp1 = head;
+    Node* temp2 = head;
+    Node* newNode = new Node();
+    newNode->value = val;
+    while(pos != place)
+    {
+        temp2=temp1;
+        temp1=temp1->next;
+        pos++;
+    }
+    newNode->next=temp1;
+    temp2->next=newNode;
+    return;
+}
+void deleteNode(int val, Node** head)
+{
+    Node* temp1 = *head;
+    Node* temp2 = *head;
+    //case 1: If to delete first node from List
+    if(temp1->value == val)
+    {
+        temp1=temp1->next;
+        *head=temp1;
+        return;
+    }
+    //case 2: If to delete any other node from List
+    while(temp1->value != val)
+    {
+        temp2 = temp1;
+        temp1 = temp1->next;
+    }
+    temp2->next=temp1->next;
+    return;
+}
+
+void printList(Node* head)
+{
+    if(head == NULL)
+    {
+        cout<<"Empty\n";
+        return;
+    }
+    while(head != NULL)
+    {
+        cout<<head->value<<" ";
+        head = head->next;
+    }
+    return;
+}
+
+int main()
+{
+    int option,value,place;
+    cout<<"Enter 1 to Add\n Enter 2 to Print\n Enter 3 to Add at Any place\n Enter 4 to Add at Begining\n Enter 5 to delete value from List\n Enter 0 to Exit\n";
+    cin >> option;
+    Node* head = NULL;
+    while(option != 0)
+    {
+        if(option == 1)
+        {
+            cout<<"Enter value to be inserted: ";
+            cin >> value;
+            addAtEnd(value, &head);
+            cout<<"\n Enter 1 to Add\n Enter 2 to Print\n Enter 3 to Add at Any place\n Enter 4 to Add at Begining\n Enter 5 to delete value from List\n Enter 0 to Exit\n";
+            cin >> option;
+        }
+        else if(option == 2)
+        {
+            cout<<"You List is: ";
+            printList(head);
+            cout<<"\n Enter 1 to Add\n Enter 2 to Print\n Enter 3 to Add at Any place\n Enter 4 to Add at Begining\n Enter 5 to delete value from List\n Enter 0 to Exit\n";
+            cin >> option;
+        }
+        else if(option == 3)
+        {
+            cout<<"Enter the value and place where you want to insert the value";
+            cin>>value>>place;
+            insertInBetween(place,value,head);
+            cout<<"\n Enter 1 to Add\n Enter 2 to Print\n Enter 3 to Add at Any place\n Enter 4 to Add at Begining\n Enter 5 to delete value from List\n Enter 0 to Exit\n";
+            cin >> option;
+        }
+        else if(option == 4)
+        {
+            cout<<"Enter a value to be inserted at Begining: ";
+            cin>>value;
+            insertAtBegin(value,&head);
+            cout<<"\n Enter 1 to Add\n Enter 2 to Print\n Enter 3 to Add at Any place\n Enter 4 to Add at Begining\n Enter 5 to delete value from List\n Enter 0 to Exit\n";
+            cin>>option;
+        }
+        else if(option == 5)
+        {
+            cout<<"Enter value which to be deleted from List: ";
+            cin>>value;
+            deleteNode(value,&head);
+            cout<<"\n Enter 1 to Add\n Enter 2 to Print\n Enter 3 to Add at Any place\n Enter 4 to Add at Begining\n Enter 5 to delete value from List\n Enter 0 to Exit\n";
+            cin>>option;
+        }
+        else
+        {
+            cout<<"\nEnter COrrect Choice\n";
+            cout<<"\n Enter 1 to Add\n Enter 2 to Print\n Enter 3 to Add at Any place\n Enter 4 to Add at Begining\n Enter 5 to delete value from List\n Enter 0 to Exit\n";
+            cin >> option;
+        }
+    }
+    cout<<"Thanks for coding!!!";
+    return 0;
+}
